@@ -1,0 +1,8 @@
+Tables: games, authors, genres
+
+Endpoints: 
+/games GET (filters)
+/games/new GET 
+/games/new POST
+/games/:id PUT
+/games/:id DELETE

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game Library</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+      }
+      .container {
+        width: 80%;
+        margin: 0 auto;
+      }
+      h1 {
+        text-align: center;
+        margin-top: 20px;
+      }
+      .game-card {
+        display: flex;
+        background-color: #fff;
+        padding: 20px;
+        margin: 10px 0;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      .game-cover img {
+        width: 150px;
+        height: auto;
+        border-radius: 8px;
+      }
+      .game-info {
+        margin-left: 20px;
+        flex: 1;
+      }
+      .game-info h2 {
+        margin: 0;
+        color: #333;
+      }
+      .game-info p {
+        margin: 5px 0;
+        color: #666;
+      }
+      .game-info .genre {
+        font-weight: bold;
+        color: #007bff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Game Library</h1>
+
+      <!-- Game cards will be dynamically inserted here -->
+      <%games.forEach((game) => { %>
+
+      <div class="game-card">
+        <div class="game-cover">
+          <img src="{{ cover }}" alt="Cover of {{ title }}" />
+        </div>
+        <div class="game-info">
+          <h2><%=game.title%></h2>
+          <p><strong>Author:</strong> <%=game.author%></p>
+          <p class="genre"><strong>Genre:</strong> <%=game.genre%></p>
+          <p><%=game.description%></p>
+        </div>
+      </div>
+      <%})%>
+    </div>
+  </body>
+</html>
