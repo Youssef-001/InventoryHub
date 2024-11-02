@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add a Game</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+      }
+
+      h1 {
+        color: #333;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      #addGameForm {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        margin: auto;
+      }
+
+      div {
+        margin-bottom: 15px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #555;
+      }
+
+      input[type="text"],
+      select,
+      textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+      }
+
+      input[type="text"]:focus,
+      select:focus,
+      textarea:focus {
+        border-color: #007bff;
+        outline: none;
+      }
+
+      button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 10px;
+        cursor: pointer;
+        font-size: 16px;
+        width: 100%;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Add a New Game</h1>
+    <form id="addGameForm" action="/new" method="POST">
+      <div>
+        <label for="title">Game Title:</label>
+        <input type="text" id="title" name="title" required />
+      </div>
+
+      <div>
+        <label for="author">Author:</label>
+        <select id="author" name="author" required>
+          <option value="">Select Author</option>
+          <option value="1">Author 1</option>
+          <option value="2">Author 2</option>
+          <option value="3">Author 3</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="genre">Genre:</label>
+        <select id="genre" name="genre" required>
+          <option value="">Select Genre</option>
+          <option value="1">Genre 1</option>
+          <option value="2">Genre 2</option>
+          <option value="3">Genre 3</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="description">Description:</label>
+        <textarea
+          id="description"
+          name="description"
+          rows="4"
+          required
+        ></textarea>
+      </div>
+
+      <div>
+        <button type="submit">Add Game</button>
+      </div>
+    </form>
+  </body>
+</html>

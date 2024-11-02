@@ -24,7 +24,10 @@ async function getGenreById(id) {
 }
 async function getAuthorById() {}
 
+async function insertGame() {}
+
 module.exports = {
   getGames,
   getGenreById,
+  insertGame,
 };
