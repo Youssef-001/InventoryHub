@@ -29,6 +29,8 @@
 
       div {
         margin-bottom: 15px;
+        margin-left: 20px;
+        margin-right: 20px;
       }
 
       label {
@@ -39,7 +41,6 @@
       }
 
       input[type="text"],
-      select,
       textarea {
         width: 100%;
         padding: 10px;
@@ -49,7 +50,6 @@
       }
 
       input[type="text"]:focus,
-      select:focus,
       textarea:focus {
         border-color: #007bff;
         outline: none;
@@ -69,6 +69,26 @@
       button:hover {
         background-color: #0056b3;
       }
+
+      /* Autocomplete suggestions styles */
+      .autocomplete-suggestions {
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background: #fff;
+        position: absolute;
+        z-index: 999;
+        max-height: 150px;
+        overflow-y: auto;
+      }
+
+      .autocomplete-suggestion {
+        padding: 10px;
+        cursor: pointer;
+      }
+
+      .autocomplete-suggestion:hover {
+        background-color: #f0f0f0;
+      }
     </style>
   </head>
   <body>
@@ -81,22 +101,19 @@
 
       <div>
         <label for="author">Author:</label>
-        <select id="author" name="author" required>
-          <option value="">Select Author</option>
-          <option value="1">Author 1</option>
-          <option value="2">Author 2</option>
-          <option value="3">Author 3</option>
-        </select>
+        <input type="text" id="author" name="author" required />
       </div>
 
       <div>
         <label for="genre">Genre:</label>
-        <select id="genre" name="genre" required>
-          <option value="">Select Genre</option>
-          <option value="1">Genre 1</option>
-          <option value="2">Genre 2</option>
-          <option value="3">Genre 3</option>
-        </select>
+        <input
+          type="text"
+          id="genre"
+          name="genre"
+          required
+          autocomplete="off"
+        />
+        <div id="suggestions" class="autocomplete-suggestions"></div>
       </div>
 
       <div>
@@ -113,5 +130,50 @@
         <button type="submit">Add Game</button>
       </div>
     </form>
+
+    <script>
+      const genres = [
+        "Action",
+        "Adventure",
+        "Role-playing",
+        "Simulation",
+        "Strategy",
+        "Puzzle",
+      ]; // Define your genres here
+
+      const genreInput = document.getElementById("genre");
+      const suggestionsContainer = document.getElementById("suggestions");
+
+      genreInput.addEventListener("input", function () {
+        const input = this.value.toLowerCase();
+        suggestionsContainer.innerHTML = "";
+
+        if (input) {
+          const filteredGenres = genres.filter((genre) =>
+            genre.toLowerCase().includes(input)
+          );
+          filteredGenres.forEach((genre) => {
+            const suggestionItem = document.createElement("div");
+            suggestionItem.className = "autocomplete-suggestion";
+            suggestionItem.textContent = genre;
+            suggestionItem.addEventListener("click", function () {
+              genreInput.value = genre;
+              suggestionsContainer.innerHTML = ""; // Clear suggestions
+            });
+            suggestionsContainer.appendChild(suggestionItem);
+          });
+        }
+      });
+
+      // Close suggestions when clicking outside
+      document.addEventListener("click", function (event) {
+        if (
+          !suggestionsContainer.contains(event.target) &&
+          event.target !== genreInput
+        ) {
+          suggestionsContainer.innerHTML = "";
+        }
+      });
+    </script>
   </body>
 </html>

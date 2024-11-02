@@ -2,7 +2,7 @@ Tables: games, authors, genres
 
 Endpoints: 
 /games GET (filters)
-/games/new GET 
-/games/new POST
+/games/new GET DONE
+/games/new POST TODO
 /games/:id PUT
 /games/:id DELETE
