@@ -1,7 +1,12 @@
 const pool = require("./pool");
 
 async function getGames() {
-  const { rows } = await pool.query(`SELECT * FROM games`);
+  const { rows } = await pool.query(
+    `SELECT games.id,games.description, games.title, authors.name AS author_name, genres.title AS genre_name 
+       FROM games 
+       JOIN authors ON games.author = authors.id 
+       JOIN genres ON games.genre = genres.id`
+  );
 
   return rows;
 }
