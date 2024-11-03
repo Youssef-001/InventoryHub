@@ -15,4 +15,9 @@ gameRouter.post("/new", (req, res) => {
   gameController.postNewGame(req, res);
 });
 
+gameRouter.get("/delete/:id", (req, res) => {
+  gameController.deleteGame(req, res);
+  res.redirect("/");
+});
+
 module.exports = gameRouter;

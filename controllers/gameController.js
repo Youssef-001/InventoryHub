@@ -16,8 +16,14 @@ async function postNewGame(req, res) {
   res.redirect("/");
 }
 
+async function deleteGame(req, res) {
+  let id = req.params.id;
+  await db.deleteGame(id);
+}
+
 module.exports = {
   getGames,
   getNewGame,
   postNewGame,
+  deleteGame,
 };

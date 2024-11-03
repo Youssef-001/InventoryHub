@@ -21,19 +21,14 @@
       }
       .game-card {
         display: flex;
+        justify-content: space-between;
         background-color: #fff;
         padding: 20px;
         margin: 10px 0;
         border-radius: 8px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       }
-      .game-cover img {
-        width: 150px;
-        height: auto;
-        border-radius: 8px;
-      }
       .game-info {
-        margin-left: 20px;
         flex: 1;
       }
       .game-info h2 {
@@ -48,6 +43,20 @@
         font-weight: bold;
         color: #007bff;
       }
+      .delete-button {
+        background-color: #ff4d4d;
+        color: #fff;
+        border: none;
+        padding: 5px;
+        height: 3rem;
+        width: 5rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+      }
+      .delete-button:hover {
+        background-color: #ff1a1a;
+      }
     </style>
   </head>
   <body>
@@ -55,17 +64,39 @@
       <h1>Game Library</h1>
 
       <!-- Game cards will be dynamically inserted here -->
-      <%games.forEach((game) => { %>
-
+      <% games.forEach((game) => { %>
       <div class="game-card">
         <div class="game-info">
-          <h2><%=game.title%></h2>
-          <p><strong>Author:</strong> <%=game.author_name%></p>
-          <p class="genre"><strong>Genre:</strong> <%=game.genre_name%></p>
-          <p><%=game.description%></p>
+          <h2><%= game.title %></h2>
+          <p><strong>Author:</strong> <%= game.author_name %></p>
+          <p class="genre"><strong>Genre:</strong> <%= game.genre_name %></p>
+          <p><%= game.description %></p>
         </div>
+        <a href="/delete/<%=game.id%>">
+          <button class="delete-button"">
+            Delete
+          </button>
+        </a>
       </div>
-      <%})%>
+      <% }) %>
     </div>
+
+    <script>
+      function deleteGame(gameId) {
+        // Make a request to the server to delete the game
+        fetch(`/delete-game/${gameId}`, {
+          method: "DELETE",
+        })
+          .then((response) => {
+            if (response.ok) {
+              // Remove the game card from the DOM
+              document.querySelector(`[data-id="${gameId}"]`).remove();
+            } else {
+              console.error("Failed to delete the game.");
+            }
+          })
+          .catch((error) => console.error("Error:", error));
+      }
+    </script>
   </body>
 </html>

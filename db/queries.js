@@ -58,8 +58,13 @@ async function insertGame(game) {
   console.log(authorId);
 }
 
+async function deleteGame(id) {
+  await pool.query(`DELETE FROM games WHERE id=$1`, [id]);
+}
+
 module.exports = {
   getGames,
   getGenreById,
   insertGame,
+  deleteGame,
 };
