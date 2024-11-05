@@ -51,7 +51,7 @@ async function insertGame(game) {
 
   console.log(game);
 
-  let genre = await pool.query(`SELECT * FROM genres WHERE title=$1`, [
+  let genre = await pool.query(`SELECT * FROM genres WHERE title ILIKE $1`, [
     game.genre,
   ]);
 
@@ -110,6 +110,57 @@ async function getGameById(id) {
   return rows[0];
 }
 
+async function updateGame(gameObj, gameId, authorId, genreId) {
+  //TODO update author,genre,game
+  console.log(gameObj);
+
+  await pool.query(
+    `UPDATE games SET title=$1, description=$2, author=$3, cover=$4, genre=$5 WHERE id=$6`,
+    [
+      gameObj.title,
+      gameObj.description,
+      authorId,
+      gameObj.cover,
+      genreId,
+      gameId,
+    ]
+  );
+}
+
+async function updateAuthor(id, newName) {
+  let { rows } = await pool.query(`UPDATE authors SET name = $1 WHERE id=$2`, [
+    newName,
+    id,
+  ]);
+  return rows[0];
+}
+
+async function getGenreId(genreName) {
+  let { rows } = await pool.query(`SELECT * FROM genres WHERE title ILIKE $1`, [
+    genreName,
+  ]);
+  console.log("here", genreName);
+  console.log("here", rows);
+  return rows[0].id;
+}
+
+async function getCountGamesAuthor(authorId) {
+  let { rows } = await pool.query(
+    `SELECT COUNT(authors.id) FROM authors JOIN games ON authors.id = games.author WHERE authors.id = $1`,
+    [authorId]
+  );
+  return rows[0].count;
+}
+
+async function insertAuthor(authorName) {
+  const { rows } = await pool.query(
+    `INSERT INTO authors (name) VALUES ($1) RETURNING id`,
+    [authorName]
+  );
+
+  return rows[0].id; // Return the new author's ID
+}
+
 module.exports = {
   getGames,
   getGenreById,
@@ -119,4 +170,9 @@ module.exports = {
   getAuthorById,
   getGamesByAuthor,
   getGameById,
+  updateGame,
+  updateAuthor,
+  getGenreId,
+  getCountGamesAuthor,
+  insertAuthor,
 };

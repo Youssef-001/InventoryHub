@@ -50,7 +50,35 @@ async function GetEditGame(req, res) {
 }
 
 async function PostEditGame(req, res) {
-  //
+  // TODO Alter row instead of delete and insert
+  let gameId = req.params.id;
+  let game = await db.getGameById(gameId);
+  let authorObj = await db.getAuthorById(game.author);
+  let authorName = authorObj[0].name;
+  let genreId = await db.getGenreId(req.body.genre);
+  let authorId = authorObj[0].id;
+
+  let authorGameCount = await db.getCountGamesAuthor(authorId);
+
+  console.log(req.body.author);
+  let newAuthorId = -1;
+  // TODO either it's the author's only game then just edit his name in authors table,
+  //else add him in authors table and change author's id in games table for the updated game
+
+  if (authorName == req.body.author) {
+    await db.updateGame(req.body, gameId, authorId, genreId);
+  } else if (authorName != req.body.author && authorGameCount == 1) {
+    await db.updateAuthor(authorId, req.body.author);
+    await db.updateGame(req.body, gameId, authorId, genreId);
+  } else {
+    newAuthorId = await db.insertAuthor(req.body.author);
+  }
+
+  if (newAuthorId != -1) {
+    await db.updateGame(req.body, gameId, newAuthorId, genreId);
+  }
+
+  res.redirect("/");
 }
 
 module.exports = {
@@ -61,4 +89,5 @@ module.exports = {
   getAuthors,
   getAuthorById,
   GetEditGame,
+  PostEditGame,
 };
