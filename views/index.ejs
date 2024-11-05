@@ -76,7 +76,8 @@
         font-weight: bold;
         color: #007bff;
       }
-      .delete-button {
+      .delete-button,
+      .edit-button {
         background-color: #ff4d4d;
         color: #fff;
         border: none;
@@ -89,6 +90,16 @@
       }
       .delete-button:hover {
         background-color: #ff1a1a;
+      }
+      .edit-button {
+        background-color: #ffc107; /* Yellow for edit button */
+      }
+      .edit-button:hover {
+        background-color: #e0a800;
+      }
+
+      a {
+        display: inline-block;
       }
     </style>
   </head>
@@ -129,9 +140,14 @@
             <p class="genre"><strong>Genre:</strong> <%= game.genre_name %></p>
             <p><%= game.description %></p>
           </div>
-          <a href="/delete/<%= game.id %>">
-            <button class="delete-button">Delete</button>
-          </a>
+          <div>
+            <a href="/edit/<%= game.id %>">
+              <button class="edit-button">Edit</button>
+            </a>
+            <a href="/delete/<%= game.id %>">
+              <button class="delete-button">Delete</button>
+            </a>
+          </div>
         </div>
         <% }) %>
       </div>

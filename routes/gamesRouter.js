@@ -20,4 +20,8 @@ gameRouter.get("/delete/:id", (req, res) => {
   res.redirect("/");
 });
 
+gameRouter.get("/edit/:id", (req, res) => {
+  gameController.GetEditGame(req, res);
+});
+
 module.exports = gameRouter;

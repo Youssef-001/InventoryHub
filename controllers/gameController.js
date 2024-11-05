@@ -39,6 +39,20 @@ async function getAuthorById(req, res) {
   res.render("author", { author: author[0], games: games });
 }
 
+async function GetEditGame(req, res) {
+  let id = req.params.id;
+  let game = await db.getGameById(id);
+  let author = await db.getAuthorById(game.author);
+  authorName = author[0].name;
+  // console.log(game);
+  game = { ...game, author_name: authorName };
+  res.render("edit", { game: game });
+}
+
+async function PostEditGame(req, res) {
+  //
+}
+
 module.exports = {
   getGames,
   getNewGame,
@@ -46,4 +60,5 @@ module.exports = {
   deleteGame,
   getAuthors,
   getAuthorById,
+  GetEditGame,
 };

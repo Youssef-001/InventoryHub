@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Game</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        width: 50%;
+        margin: 40px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+      }
+      label {
+        margin-top: 10px;
+        font-weight: bold;
+      }
+      input[type="text"],
+      textarea,
+      select {
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+      }
+      textarea {
+        resize: vertical;
+      }
+      .button-group {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+      }
+      .save-button {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      .save-button:hover {
+        background-color: #0056b3;
+      }
+      .cancel-button {
+        background-color: #ff4d4d;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      .cancel-button:hover {
+        background-color: #ff1a1a;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Edit Game</h1>
+      <form action="/edit/<%= game.id %>" method="POST">
+        <!-- Game Title -->
+        <label for="title">Game Title</label>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          value="<%= game.title %>"
+          required
+        />
+
+        <!-- Author -->
+        <label for="author">Author</label>
+        <input
+          type="text"
+          id="author"
+          name="author"
+          value="<%= game.author_name %>"
+          required
+        />
+
+        <!-- Genre -->
+        <label for="genre">Genre</label>
+        <select id="genre" name="genre" required>
+          <option value="action" <%= game.genre_name === 'Action' ? 'selected' : '' %>>Action</option>
+          <option value="adventure" <%= game.genre_name === 'Adventure' ? 'selected' : '' %>>Adventure</option>
+          <option value="role-playing" <%= game.genre_name === 'Role-playing' ? 'selected' : '' %>>Role-playing</option>
+          <option value="simulation" <%= game.genre_name === 'Simulation' ? 'selected' : '' %>>Simulation</option>
+          <option value="strategy" <%= game.genre_name === 'Strategy' ? 'selected' : '' %>>Strategy</option>
+        </select>
+
+        <!-- Description -->
+        <label for="description">Description</label>
+        <textarea
+          id="description"
+          name="description"
+          rows="5"
+          required
+        ><%= game.description %></textarea>
+
+        <!-- Cover URL -->
+        <label for="cover">Cover URL</label>
+        <input
+          type="text"
+          id="cover"
+          name="cover"
+          value="<%= game.cover %>"
+          required
+        />
+
+        <!-- Save and Cancel Buttons -->
+        <div class="button-group">
+          <button type="submit" class="save-button">Save Changes</button>
+          <a href="/">
+            <button type="button" class="cancel-button">Cancel</button>
+          </a>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
