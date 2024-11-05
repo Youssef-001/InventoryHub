@@ -25,7 +25,6 @@ async function getAuthors(req, res) {
 
   console.log(authors);
   res.render("authors", { authors: authors });
-  res.end("done");
 }
 
 async function getAuthorById(req, res) {

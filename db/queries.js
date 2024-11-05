@@ -59,7 +59,13 @@ async function insertGame(game) {
 
   await pool.query(
     `INSERT INTO games (title, author, description, genre, cover) VALUES ($1, $2, $3, $4, $5)`,
-    [game.title, authorId, game.description, genreId, "kofta"]
+    [
+      game.title,
+      authorId,
+      game.description,
+      genreId,
+      "https://example.com/animalcrossing.jpg ",
+    ]
   );
   console.log(authorId);
 }
@@ -91,7 +97,7 @@ async function getAuthorById(id) {
 
 async function getGamesByAuthor(id) {
   let { rows } = await pool.query(
-    `SELECT * FROM games JOIN authors ON games.author=authors.id WHERE authors.id=$1`,
+    `SELECT * FROM games JOIN authors ON games.author=authors.id JOIN genres ON games.genre = genres.id WHERE authors.id=$1`,
     [id]
   );
   return rows;
