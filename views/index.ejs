@@ -19,6 +19,23 @@
         text-align: center;
         margin-top: 20px;
       }
+      .filter-section {
+        text-align: center;
+        margin: 20px 0;
+      }
+      .genre-button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        margin: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+      }
+      .genre-button:hover {
+        background-color: #0056b3;
+      }
       .game-card {
         display: flex;
         justify-content: space-between;
@@ -63,40 +80,44 @@
     <div class="container">
       <h1>Game Library</h1>
 
-      <!-- Game cards will be dynamically inserted here -->
-      <% games.forEach((game) => { %>
-      <div class="game-card">
-        <div class="game-info">
-          <h2><%= game.title %></h2>
-          <p><strong>Author:</strong> <%= game.author_name %></p>
-          <p class="genre"><strong>Genre:</strong> <%= game.genre_name %></p>
-          <p><%= game.description %></p>
-        </div>
-        <a href="/delete/<%=game.id%>">
-          <button class="delete-button"">
-            Delete
-          </button>
-        </a>
+      <!-- Genre filter buttons -->
+      <div class="filter-section">
+        <a href="/?filter=action"
+          ><button class="genre-button">Action</button></a
+        >
+        <a href="/?filter=adventure"
+          ><button class="genre-button">Adventure</button></a
+        >
+        <a href="/?filter=role playing"
+          ><button class="genre-button">Role-playing</button></a
+        >
+        <a href="/?filter=simulation"
+          ><button class="genre-button">Simulation</button></a
+        >
+        <a href="/?filter=strategy"
+          ><button class="genre-button">Strategy</button></a
+        >
+        <a href="/?filter=puzzle"
+          ><button class="genre-button">Puzzle</button></a
+        >
       </div>
-      <% }) %>
-    </div>
 
-    <script>
-      function deleteGame(gameId) {
-        // Make a request to the server to delete the game
-        fetch(`/delete-game/${gameId}`, {
-          method: "DELETE",
-        })
-          .then((response) => {
-            if (response.ok) {
-              // Remove the game card from the DOM
-              document.querySelector(`[data-id="${gameId}"]`).remove();
-            } else {
-              console.error("Failed to delete the game.");
-            }
-          })
-          .catch((error) => console.error("Error:", error));
-      }
-    </script>
+      <!-- Game cards will be dynamically inserted here -->
+      <div id="gameList">
+        <% games.forEach((game) => { %>
+        <div class="game-card">
+          <div class="game-info">
+            <h2><%= game.title %></h2>
+            <p><strong>Author:</strong> <%= game.author_name %></p>
+            <p class="genre"><strong>Genre:</strong> <%= game.genre_name %></p>
+            <p><%= game.description %></p>
+          </div>
+          <a href="/delete/<%=game.id%>">
+            <button class="delete-button">Delete</button>
+          </a>
+        </div>
+        <% }) %>
+      </div>
+    </div>
   </body>
 </html>

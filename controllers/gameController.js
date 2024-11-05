@@ -1,9 +1,8 @@
 const db = require("../db/queries");
 
 async function getGames(req, res) {
-  let games = await db.getGames();
+  let games = await db.getGames(req.query.filter || "");
   //   console.log(games);
-
   res.render("index", { games: games });
 }
 
