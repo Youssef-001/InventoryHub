@@ -65,6 +65,16 @@ async function insertGame(game) {
 }
 
 async function deleteGame(id) {
+  let { rows } = await pool.query("SELECT * FROM games WHERE id=$1", [id]);
+  let author = rows[0].author;
+  let authorCount = await pool.query(
+    `SELECT COUNT(authors.name) FROM games JOIN authors ON games.author = authors.id WHERE authors.id=$1`,
+    [author]
+  );
+  console.log(authorCount.rows[0].count);
+  if (authorCount.rows[0].count <= 1) {
+    await pool.query(`DELETE FROM authors WHERE id=$1`, [author]);
+  }
   await pool.query(`DELETE FROM games WHERE id=$1`, [id]);
 }
 
@@ -79,6 +89,14 @@ async function getAuthorById(id) {
   return rows;
 }
 
+async function getGamesByAuthor(id) {
+  let { rows } = await pool.query(
+    `SELECT * FROM games JOIN authors ON games.author=authors.id WHERE authors.id=$1`,
+    [id]
+  );
+  return rows;
+}
+
 module.exports = {
   getGames,
   getGenreById,
@@ -86,4 +104,5 @@ module.exports = {
   deleteGame,
   getAuthors,
   getAuthorById,
+  getGamesByAuthor,
 };

@@ -32,8 +32,12 @@ async function getAuthorById(req, res) {
   let id = req.params.id;
 
   let author = await db.getAuthorById(id);
-  // console.log(author[0]);
-  res.render(author, { author: author });
+  let games = await db.getGamesByAuthor(id);
+  console.log(games);
+  console.log(author);
+
+  console.log(author[0]);
+  res.render("author", { author: author[0], games: games });
 }
 
 module.exports = {
