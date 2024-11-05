@@ -4,7 +4,7 @@ async function getGames(filter) {
   let q = "";
 
   if (filter != "") {
-    q += `WHERE genres.title ILIKE '${filter}'`;
+    q += `WHERE genres.title ILIKE '%${filter}%'`;
   }
   const { rows } = await pool.query(
     `SELECT games.id,games.description, games.title, authors.name AS author_name, genres.title AS genre_name 
@@ -54,6 +54,7 @@ async function insertGame(game) {
   let genre = await pool.query(`SELECT * FROM genres WHERE title=$1`, [
     game.genre,
   ]);
+
   let genreId = genre.rows[0].id;
 
   await pool.query(
@@ -67,9 +68,22 @@ async function deleteGame(id) {
   await pool.query(`DELETE FROM games WHERE id=$1`, [id]);
 }
 
+async function getAuthors() {
+  let { rows } = await pool.query("SELECT * FROM authors");
+
+  return rows;
+}
+
+async function getAuthorById(id) {
+  let { rows } = await pool.query(`SELECT * FROM authors WHERE id=$1`, [id]);
+  return rows;
+}
+
 module.exports = {
   getGames,
   getGenreById,
   insertGame,
   deleteGame,
+  getAuthors,
+  getAuthorById,
 };

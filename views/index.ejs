@@ -36,6 +36,22 @@
       .genre-button:hover {
         background-color: #0056b3;
       }
+      /* Special "New" button style */
+      .new-button {
+        background-color: #28a745;
+        color: #fff;
+        padding: 10px 20px;
+        margin: 5px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      }
+      .new-button:hover {
+        background-color: #218838;
+      }
       .game-card {
         display: flex;
         justify-content: space-between;
@@ -80,15 +96,19 @@
     <div class="container">
       <h1>Game Library</h1>
 
-      <!-- Genre filter buttons -->
+      <!-- Genre filter buttons and New button -->
       <div class="filter-section">
+        <a href="/new">
+          <button class="new-button">New</button>
+        </a>
+        <a href="/"><button class="genre-button">All</button></a>
         <a href="/?filter=action"
           ><button class="genre-button">Action</button></a
         >
         <a href="/?filter=adventure"
           ><button class="genre-button">Adventure</button></a
         >
-        <a href="/?filter=role playing"
+        <a href="/?filter=role-playing"
           ><button class="genre-button">Role-playing</button></a
         >
         <a href="/?filter=simulation"
@@ -96,9 +116,6 @@
         >
         <a href="/?filter=strategy"
           ><button class="genre-button">Strategy</button></a
-        >
-        <a href="/?filter=puzzle"
-          ><button class="genre-button">Puzzle</button></a
         >
       </div>
 
@@ -112,7 +129,7 @@
             <p class="genre"><strong>Genre:</strong> <%= game.genre_name %></p>
             <p><%= game.description %></p>
           </div>
-          <a href="/delete/<%=game.id%>">
+          <a href="/delete/<%= game.id %>">
             <button class="delete-button">Delete</button>
           </a>
         </div>

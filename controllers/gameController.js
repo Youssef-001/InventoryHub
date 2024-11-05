@@ -20,9 +20,27 @@ async function deleteGame(req, res) {
   await db.deleteGame(id);
 }
 
+async function getAuthors(req, res) {
+  let authors = await db.getAuthors();
+
+  console.log(authors);
+  res.render("authors", { authors: authors });
+  res.end("done");
+}
+
+async function getAuthorById(req, res) {
+  let id = req.params.id;
+
+  let author = await db.getAuthorById(id);
+  // console.log(author[0]);
+  res.render(author, { author: author });
+}
+
 module.exports = {
   getGames,
   getNewGame,
   postNewGame,
   deleteGame,
+  getAuthors,
+  getAuthorById,
 };
