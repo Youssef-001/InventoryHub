@@ -165,10 +165,44 @@
         text-decoration: none;
         color: inherit;
       }
+
+      .authors-btn {
+        position: absolute;
+        right: 20px;
+        background-color: white;
+        inset: none;
+        color: black;
+        font-size: 16px;
+        border-radius: 6px;
+        padding: 5px;
+        border: 1px solid grey;
+      }
+      .authors-btn:hover {
+        background-color: #eee;
+      }
     </style>
   </head>
   <body>
     <div class="container">
+      <button class="authors-btn">
+        <a
+          href="/authors"
+          style="
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            color: black;
+          "
+        >
+          <img
+            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAABvUlEQVRIS+2W4U0DMQyF2w1gAsoGsEGZAJiAsgFMQJkANqAbwAbcBpQJ6AYwAu+TYsm9y8WhV3R/aslKlcR+frbj63QykkxHwp0cgHfN/JkMH6TXtQ5qUz1Pjo+0oo30UbpJQO9aucP+RQ14DfAygeb83WpzJTVg7rzVMI+Ar+TktcDgR2fnibkHP3XZyJpHwIACXhIYw5w6f6SL91qfS0YR8LeMqWlJ1ok1d76ks5p0l4ABBDiSHLBlodc2YkzqSGFJSCmp9YEOBq5pLt5uI72TPqUI2aO7d2aMIc5w2hY6GqawIyt0NazZp6tZBwFjvJDeSOfJYaOVAUJ9PagBEQydPhi45IMzSnKZArS7BAU4a0ei5oINLE8SM3NAGjfSTyns+W3iS9Ob9j5gavWSmERsObfOtru+0QisM79zwDBkYkWDox0QKaWbjb2fep0ubwMDxvT5K6gF4dkV33UbuO/p1KTb7vg5TbkWUmp97J144NoRGQXhQQAFHNn6YnlgOti+LpHz6Nz8zhJj7q9c/bf+7PlOjBxH53yjs+/XDD3jpTb537QP4fk0JUfRANlHEFkfB+B/S23b8Wip/gXzHVcfj6nPMQAAAABJRU5ErkJggg=="
+            alt="Authors Icon"
+            style="width: 30px; height: 30px; margin-right: 10px"
+          />
+          <span>Authors</span>
+        </a>
+      </button>
       <h1>Inventory Hub</h1>
 
       <!-- Genre filter buttons and New button -->
@@ -212,11 +246,7 @@
       <div id="gameList">
         <% games.forEach((game) => { %>
         <div class="game-card">
-          <img
-            src="https://placehold.co/80x30"
-            class="image-place"
-            alt="test"
-          />
+          <img src="<%=game.cover%>" class="image-place" alt="test" />
 
           <div class="game">
             <div class="game-info">
@@ -264,3 +294,5 @@
     });
   </script>
 </html>
+
+<!-- c440f23312eb4c88b83918b21875ecd7 -->
