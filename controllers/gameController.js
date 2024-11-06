@@ -1,7 +1,7 @@
 const db = require("../db/queries");
 
 async function getGames(req, res) {
-  let games = await db.getGames(req.query.filter || "");
+  let games = await db.getGames(req.query.filter || "", req.query.search || "");
   //   console.log(games);
   res.render("index", { games: games });
 }
@@ -81,6 +81,10 @@ async function PostEditGame(req, res) {
   }
 
   res.redirect("/");
+}
+
+async function GetSearchGames(req, res) {
+  console.log(req.body);
 }
 
 module.exports = {

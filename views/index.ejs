@@ -97,9 +97,13 @@
       .edit-button:hover {
         background-color: #e0a800;
       }
-
-      a {
-        display: inline-block;
+      .search-input {
+        padding: 8px;
+        width: 200px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+        margin-top: 10px;
       }
     </style>
   </head>
@@ -128,6 +132,17 @@
         <a href="/?filter=strategy"
           ><button class="genre-button">Strategy</button></a
         >
+
+        <!-- Search input field below buttons -->
+        <form action="/" method="get" style="margin-top: 20px">
+          <input
+            type="text"
+            name="search"
+            class="search-input"
+            placeholder="Search games..."
+          />
+          <button type="submit" class="genre-button">Search</button>
+        </form>
       </div>
 
       <!-- Game cards will be dynamically inserted here -->

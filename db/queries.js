@@ -1,16 +1,24 @@
 const pool = require("./pool");
 
-async function getGames(filter) {
-  let q = "";
+async function getGames(filter, search) {
+  let conditions = [];
 
-  if (filter != "") {
-    q += `WHERE genres.title ILIKE '%${filter}%'`;
+  if (filter) {
+    conditions.push(`genres.title ILIKE '%${filter}%'`);
   }
+
+  if (search) {
+    conditions.push(`games.title ILIKE '%${search}%'`);
+  }
+
+  const whereClause =
+    conditions.length > 0 ? `WHERE ${conditions.join(" AND ")}` : "";
+
   const { rows } = await pool.query(
-    `SELECT games.id,games.description, games.title, authors.name AS author_name, genres.title AS genre_name 
+    `SELECT games.id, games.description, games.title, authors.name AS author_name, genres.title AS genre_name 
        FROM games 
        JOIN authors ON games.author = authors.id 
-       JOIN genres ON games.genre = genres.id ${q}`
+       JOIN genres ON games.genre = genres.id ${whereClause}`
   );
 
   return rows;

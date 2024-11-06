@@ -28,4 +28,8 @@ gameRouter.post("/edit/:id", (req, res) => {
   gameController.PostEditGame(req, res);
 });
 
+// gameRouter.get("/", (req, res) => {
+//   gameController.GetSearchGames(req, res);
+// });
+
 module.exports = gameRouter;
