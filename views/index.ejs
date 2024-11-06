@@ -23,6 +23,7 @@
         text-align: center;
         margin: 20px 0;
         background-color: #eee;
+        padding: 1.1rem;
       }
       .genre-button {
         color: #fff;
@@ -80,7 +81,11 @@
       }
       .game-info .genre {
         font-weight: bold;
-        color: #007bff;
+        color: black;
+        border: 2px solid #eee;
+        border-radius: 8px;
+        background-color: #eee;
+        padding: 6px;
       }
       .delete-button,
       .edit-button {
@@ -138,18 +143,18 @@
       .game-edit {
         display: flex;
         justify-content: flex-end;
-        gap: 1rem;
+        gap: 2rem;
         background-color: #eee;
         padding: 1rem;
         opacity: 0; /* Initially hide the element */
         visibility: hidden; /* Initially hidden */
-        transition: opacity 0.6s ease, visibility 0s linear 0.6s; /* Transition visibility after opacity */
+        transition: opacity 0.3s ease, visibility 0s linear 0.3s; /* Transition visibility after opacity */
       }
 
       .game-card:hover .game-edit {
         opacity: 1; /* Make the element visible */
         visibility: visible; /* Make it interactable */
-        transition: opacity 0.4s ease, visibility 0s linear 0s; /* Remove delay for visibility */
+        transition: opacity 0.3s ease, visibility 0s linear 0s; /* Remove delay for visibility */
       }
 
       .game-card {
@@ -183,53 +188,29 @@
       .authors-btn:hover {
         background-color: #eee;
       }
+
+      .image-cover {
+        /* width: 851px;
+        height: 200px; */
+        object-fit: cover;
+        width: 100%;
+        aspect-ratio: 16 / 5;
+      }
     </style>
   </head>
   <body>
-    <div class="container">
-      <button class="authors-btn">
-        <a
-          href="/authors"
-          style="
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-decoration: none;
-            color: black;
-          "
-        >
-          <img
-            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAABvUlEQVRIS+2W4U0DMQyF2w1gAsoGsEGZAJiAsgFMQJkANqAbwAbcBpQJ6AYwAu+TYsm9y8WhV3R/aslKlcR+frbj63QykkxHwp0cgHfN/JkMH6TXtQ5qUz1Pjo+0oo30UbpJQO9aucP+RQ14DfAygeb83WpzJTVg7rzVMI+Ar+TktcDgR2fnibkHP3XZyJpHwIACXhIYw5w6f6SL91qfS0YR8LeMqWlJ1ok1d76ks5p0l4ABBDiSHLBlodc2YkzqSGFJSCmp9YEOBq5pLt5uI72TPqUI2aO7d2aMIc5w2hY6GqawIyt0NazZp6tZBwFjvJDeSOfJYaOVAUJ9PagBEQydPhi45IMzSnKZArS7BAU4a0ei5oINLE8SM3NAGjfSTyns+W3iS9Ob9j5gavWSmERsObfOtru+0QisM79zwDBkYkWDox0QKaWbjb2fep0ubwMDxvT5K6gF4dkV33UbuO/p1KTb7vg5TbkWUmp97J144NoRGQXhQQAFHNn6YnlgOti+LpHz6Nz8zhJj7q9c/bf+7PlOjBxH53yjs+/XDD3jpTb537QP4fk0JUfRANlHEFkfB+B/S23b8Wip/gXzHVcfj6nPMQAAAABJRU5ErkJggg=="
-            alt="Authors Icon"
-            style="width: 30px; height: 30px; margin-right: 10px"
-          />
-          <span>Authors</span>
-        </a>
-      </button>
-      <h1>Inventory Hub</h1>
-
+    <%- include('header') %>
+    <div class="container" style="margin-top: 10rem">
       <!-- Genre filter buttons and New button -->
       <div class="filter-section">
-        <a href="/"><button class="genre-button">All</button></a>
-        <a href="/?filter=action"
-          ><button class="genre-button">Action</button></a
-        >
-        <a href="/?filter=adventure"
-          ><button class="genre-button">Adventure</button></a
-        >
-        <a href="/?filter=role-playing"
-          ><button class="genre-button">Role-playing</button></a
-        >
-        <a href="/?filter=simulation"
-          ><button class="genre-button">Simulation</button></a
-        >
-        <a href="/?filter=strategy"
-          ><button class="genre-button">Strategy</button></a
-        >
+        <a href="/" class="genre-button">All</a>
+        <a href="/?filter=action" class="genre-button">Action</a>
+        <a href="/?filter=adventure" class="genre-button">Adventure</a>
+        <a href="/?filter=role-playing" class="genre-button">Role-playing</a>
+        <a href="/?filter=simulation" class="genre-button">Simulation</a>
+        <a href="/?filter=strategy" class="genre-button">Strategy</a>
 
-        <a href="/new">
-          <button class="new-button">New Game</button>
-        </a>
+        <a href="/new" class="new-button"> New Game </a>
 
         <!-- Search input field below buttons -->
       </div>
@@ -250,15 +231,20 @@
       <div id="gameList">
         <% games.forEach((game) => { %>
         <div class="game-card">
-          <img src="<%=game.cover%>" class="image-place" alt="test" />
+          <img
+            class="image-cover"
+            src="<%=game.cover%>"
+            class="image-place"
+            alt="test"
+          />
 
           <div class="game">
             <div class="game-info">
+              <p class="genre" style="float: right">
+                <strong></strong> <%= game.genre_name %>
+              </p>
               <h2><%= game.title %></h2>
               <p><strong>Author:</strong> <%= game.author_name %></p>
-              <p class="genre">
-                <strong>Genre:</strong> <%= game.genre_name %>
-              </p>
               <p><%= game.description %></p>
             </div>
             <div class="game-edit hide">

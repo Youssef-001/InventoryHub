@@ -17,11 +17,10 @@
         text-align: center;
       }
       h1 {
-        color: #333;
+        /* color: #333; */
       }
       .author-list {
         display: flex;
-        flex-wrap: wrap;
         gap: 10px;
         justify-content: center;
       }
@@ -29,6 +28,7 @@
         background-color: #fff;
         padding: 15px;
         width: 200px;
+        flex: 1;
         border-radius: 8px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         text-align: left;
@@ -45,15 +45,17 @@
     </style>
   </head>
   <body>
-    <div class="container">
+    <%- include('header') %>
+
+    <div class="container" style="margin-top: 10rem">
       <h1>Author List</h1>
       <div class="author-list">
         <% authors.forEach((author) => { %>
         <div class="author-card">
           <a href="/authors/<%=author.id%>">
             <h2><%= author.name %></h2>
+            <p><strong>ID:</strong> <%= author.id %></p>
           </a>
-          <p><strong>ID:</strong> <%= author.id %></p>
         </div>
         <% }) %>
       </div>

@@ -105,7 +105,7 @@ async function getAuthorById(id) {
 
 async function getGamesByAuthor(id) {
   let { rows } = await pool.query(
-    `SELECT * FROM games JOIN authors ON games.author=authors.id JOIN genres ON games.genre = genres.id WHERE authors.id=$1`,
+    `SELECT games.title as game_name,games.cover, games.id, games.description,authors.name as author, genres.title as genre_title  FROM games JOIN authors ON games.author=authors.id JOIN genres ON games.genre = genres.id WHERE authors.id=$1`,
     [id]
   );
   return rows;
