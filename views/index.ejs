@@ -25,7 +25,6 @@
         background-color: #eee;
       }
       .genre-button {
-        /* background-color: #007bff; */
         color: #fff;
         border: none;
         padding: 10px 20px;
@@ -38,7 +37,6 @@
       .genre-button:hover {
         background-color: #0056b3;
       }
-      /* Special "New" button style */
       .new-button {
         background-color: #28a745;
         color: #fff;
@@ -97,7 +95,7 @@
         background-color: #ff1a1a;
       }
       .edit-button {
-        background-color: #ffc107; /* Yellow for edit button */
+        background-color: #ffc107;
       }
       .edit-button:hover {
         background-color: #e0a800;
@@ -138,6 +136,17 @@
         display: flex;
         justify-content: flex-end;
         gap: 1rem;
+        background-color: #eee;
+        padding: 1rem;
+        opacity: 0; /* Initially hide the element */
+        visibility: hidden; /* Initially hidden */
+        transition: opacity 0.6s ease, visibility 0s linear 0.6s; /* Transition visibility after opacity */
+      }
+
+      .game-card:hover .game-edit {
+        opacity: 1; /* Make the element visible */
+        visibility: visible; /* Make it interactable */
+        transition: opacity 0.4s ease, visibility 0s linear 0s; /* Remove delay for visibility */
       }
 
       .game-card {
@@ -145,6 +154,16 @@
         flex-direction: column;
         height: 100%;
         margin-top: 1rem;
+      }
+
+      .links {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
       }
     </style>
   </head>
@@ -193,7 +212,11 @@
       <div id="gameList">
         <% games.forEach((game) => { %>
         <div class="game-card">
-          <img src=https://placehold.co/80x30 class="image-place" alt="test" />
+          <img
+            src="https://placehold.co/80x30"
+            class="image-place"
+            alt="test"
+          />
 
           <div class="game">
             <div class="game-info">
@@ -204,13 +227,21 @@
               </p>
               <p><%= game.description %></p>
             </div>
-            <div class="game-edit">
-              <a href="/edit/<%= game.id %>">
-                <button class="edit-button">Edit</button>
-              </a>
-              <a href="/delete/<%= game.id %>">
-                <button class="delete-button">Delete</button>
-              </a>
+            <div class="game-edit hide">
+              <div class="links">
+                <a href="/edit/<%= game.id %>">
+                  <img
+                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAABrklEQVRIS82Wi1HDMAxA2w0YoWwAG5QJgA1gA5iAMgEwAWwAG5ANYAO6AYyA3p3lU4Xj2LW5VHe6JP7o6WM7Xi5mkuVM3MXBgY8kEytRniXyKYN+wkDm3Iieiw6iT6JbbyQVMZPuKqCPMvbWQJ/l/cKAcOhMFOeieDDefnWCAjoJJOCnNnIPXkvnexhMFDte+nSFVNKMwzZSsnAfMkcGkRfRa7WRA5OeIQHzTUBfRXEawVnmas0JhD6+j7W9FQwUw5pSdYpoN6J2vbzJ92WPiD2UVLKodCcAIlK+iRbo0Ar2UK0p7R8GDgcotcWRKPukegyqNSXFbMdRKB214CkoNX2YgtaCU1A9OLCVg15JP6s9bs/SiFcyidXLE6GmNVCyUL24WqBrAbLHydbOuVASMZP1NKuJlMzYuU1gO9nX9M+PoCdYz28isVsmBe0acVhb8cHeHYP+G3gK2gxmRZJaL+zJbaLdNjUtrgnb2e69wP4iQGr1z1PqDL9LPUKz2wnD36VWK8dxCYilSV32NmarVNoeHe4PntF7NZGTph5CieLPQQ0e3IW+R6RZG7NF/AsySJwfg9EcMAAAAABJRU5ErkJggg=="
+                  />
+                </a>
+              </div>
+              <div class="links">
+                <a href="/delete/<%= game.id %>">
+                  <img
+                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAABGElEQVRIS+2WXRHCMBCEWwdIqAQcAA5AAcUBDmgVIIHiAAeAAxyABBzA7kzCZNqQ3zLhITfDQ5O7+y57Kb2ySGRlIm7hC96i0Imh2Mb1ID5gQveWxB32Ny5wV3CNZAeXhPBZ4Xey+fbBcwScbUGB+wvEXWTs34ArVERZf2Hs/+PbiVXgFA+mG+xS3BNON52j6XKx1+x5jLGn7O3AMliVpC91KzZnmhZQ0qvY3ylJRpFatqVBYjU5OSyK67RXBsfe6iy1qmC+XFKN/B5/7oXPR0J+ZdaIrnvvZofno1hTJ5hRpNb9D9jWgsCcKDlZxhiHPg5/AzNJXcH7HkHl9EEoT+0FpjPHn2UAnFACtWMP87nO1QFsc0gy8BsEolkfvKIjQQAAAABJRU5ErkJggg=="
+                  />
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -218,4 +249,18 @@
       </div>
     </div>
   </body>
+
+  <script>
+    document.querySelectorAll(".game-card").forEach((card) => {
+      const gameEdit = card.querySelector(".game-edit");
+
+      card.addEventListener("mouseenter", () => {
+        gameEdit.classList.remove("hide");
+      });
+
+      card.addEventListener("mouseleave", () => {
+        gameEdit.classList.add("hide");
+      });
+    });
+  </script>
 </html>
