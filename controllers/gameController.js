@@ -46,6 +46,8 @@ async function GetEditGame(req, res) {
   authorName = author[0].name;
   // console.log(game);
   game = { ...game, author_name: authorName };
+  let genre_name = await db.getGenreById(game.genre);
+  game = { ...game, genre_name };
   res.render("edit", { game: game });
 }
 

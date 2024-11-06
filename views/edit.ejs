@@ -103,9 +103,10 @@
         <select id="genre" name="genre" required>
           <option value="action" <%= game.genre_name === 'Action' ? 'selected' : '' %>>Action</option>
           <option value="adventure" <%= game.genre_name === 'Adventure' ? 'selected' : '' %>>Adventure</option>
-          <option value="role-playing game" <%= game.genre_name === 'Role-playing' ? 'selected' : '' %>>Role-playing</option>
+          <option value="role-playing game" <%= game.genre_name === 'Role-Playing Game' ? 'selected' : '' %>>Role-playing</option>
           <option value="simulation" <%= game.genre_name === 'Simulation' ? 'selected' : '' %>>Simulation</option>
           <option value="strategy" <%= game.genre_name === 'Strategy' ? 'selected' : '' %>>Strategy</option>
+          <option value="sports" <%= game.genre_name === 'Sports' ? 'selected' : '' %>>Sports</option>
         </select>
 
         <!-- Description -->
