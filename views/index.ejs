@@ -31,14 +31,16 @@
         margin: 5px;
         border-radius: 5px;
         cursor: pointer;
-        font-size: 14px;
+        font-size: 18px;
         color: black;
+        font-family: Helvetica;
       }
       .genre-button:hover {
-        background-color: #0056b3;
+        background-color: #333333;
+        color: white;
       }
       .new-button {
-        background-color: #28a745;
+        background-color: black;
         color: #fff;
         padding: 10px 20px;
         margin: 5px;
@@ -48,9 +50,10 @@
         font-size: 14px;
         font-weight: bold;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        transition: background-color 0.1s ease;
       }
       .new-button:hover {
-        background-color: #218838;
+        background-color: darkgray;
       }
       .game {
         display: flex;
@@ -207,9 +210,6 @@
 
       <!-- Genre filter buttons and New button -->
       <div class="filter-section">
-        <a href="/new">
-          <button class="new-button">New</button>
-        </a>
         <a href="/"><button class="genre-button">All</button></a>
         <a href="/?filter=action"
           ><button class="genre-button">Action</button></a
@@ -226,6 +226,10 @@
         <a href="/?filter=strategy"
           ><button class="genre-button">Strategy</button></a
         >
+
+        <a href="/new">
+          <button class="new-button">New Game</button>
+        </a>
 
         <!-- Search input field below buttons -->
       </div>
