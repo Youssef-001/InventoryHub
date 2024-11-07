@@ -67,13 +67,7 @@ async function insertGame(game) {
 
   await pool.query(
     `INSERT INTO games (title, author, description, genre, cover) VALUES ($1, $2, $3, $4, $5)`,
-    [
-      game.title,
-      authorId,
-      game.description,
-      genreId,
-      "https://example.com/animalcrossing.jpg ",
-    ]
+    [game.title, authorId, game.description, genreId, game.cover]
   );
   console.log(authorId);
 }
