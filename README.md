@@ -1,12 +1,12 @@
 # InventoryHub
 
-InventoryHub is a Node.js-based inventory management application that allows you to efficiently track and manage your products using PostgreSQL for data storage. The app provides a simple interface to perform CRUD (Create, Read, Update, Delete) operations on your inventory.
+InventoryHub is a Node.js-based application for managing your video game collection. It allows users to track and manage their games, including details such as title, platform, release year, and more. Using PostgreSQL as the database, the app provides a simple and efficient way to catalog your games.
 
 ## Features
-- **Manage Inventory**: Add, update, or remove products from your inventory.
-- **Product Management**: View and manage product details such as stock, prices, and descriptions.
-- **Dynamic User Interface**: Uses EJS for rendering dynamic pages.
-- **PostgreSQL Database**: Reliable relational database management system.
+- **Game Management**: Add, update, or remove games in your collection.
+- **Game Details**: Store information like title, platform, release year, genre, and status.
+- **PostgreSQL Database**: Efficient relational database management for storing game data.
+- **Dynamic UI**: Rendered using EJS for dynamic, interactive pages.
 
 ## Technologies Used
 - **Backend**: Node.js, Express
