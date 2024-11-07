@@ -17,8 +17,7 @@ const validateUser = [
 
   body("author")
     .trim()
-    .isAlpha()
-    .withMessage(`Name must contain only letters`)
+
     .isLength({ min: 3, max: 30 })
     .withMessage(`Length must be between 3 and 30 characters`)
     .notEmpty(),

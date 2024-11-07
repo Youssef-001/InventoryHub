@@ -99,6 +99,15 @@
         font-weight: bold;
         margin-bottom: 15px;
       }
+select{
+  width:100%;
+  padding: 10px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+}
+      
     </style>
   </head>
   <body>
@@ -141,21 +150,23 @@
         </div>
 
         <!-- Genre -->
-        <div>
-          <label for="genre">Genre:</label>
-          <input
-            type="text"
-            id="genre"
-            name="genre"
-            value="<%= oldValues && oldValues.genre %>"
-            required
-            autocomplete="off"
-          />
-          <div id="suggestions" class="autocomplete-suggestions"></div>
-          <% if (errors) { %> <% errors.filter(error => error.path ===
-          'genre').forEach(error => { %>
-          <div class="error-message"><%= error.msg %></div>
-          <% }) %> <% } %>
+        <div >
+          <label for="genre" >Genre</label>
+          <select id="genre" name="genre" class="<%= errors.some(error => error.path === 'genre') ? 'error' : '' %>" required>
+            <option value="action" <%= oldValues.genre === 'Action' ? 'selected' : '' %>>Action</option>
+            <option value="adventure" <%= oldValues.genre === 'Adventure' ? 'selected' : '' %>>Adventure</option>
+            <option value="role-playing game" <%= oldValues.genre === 'Role-Playing Game' ? 'selected' : '' %>>Role-playing</option>
+            <option value="simulation" <%= oldValues.genre === 'Simulation' ? 'selected' : '' %>>Simulation</option>
+            <option value="strategy" <%= oldValues.genre === 'Strategy' ? 'selected' : '' %>>Strategy</option>
+            <option value="sports" <%= oldValues.genre === 'Sports' ? 'selected' : '' %>>Sports</option>
+          </select>
+          <% if (errors) { %>
+            <% errors.forEach(function(error) { %>
+              <% if (error.path === 'genre') { %>
+                <div class="error-message"><%= error.msg %></div>
+              <% } %>
+            <% }); %>
+          <% } %>
         </div>
 
         <!-- Description -->
