@@ -22,16 +22,10 @@ const validateUser = [
     .withMessage(`Length must be between 3 and 30 characters`)
     .notEmpty(),
 
-  body("genre")
-    .trim()
-    .isAlpha()
-    .notEmpty()
-    .withMessage("Genre must be something else"),
-
   body("description")
     .trim()
     .notEmpty()
-    .isLength({ min: 10, max: 150 })
+    .isLength({ min: 10, max: 250 })
     .withMessage("Length must be between 10 and 150 characters"),
 ];
 
