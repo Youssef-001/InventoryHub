@@ -21,7 +21,7 @@ async function getGames(req, res, next) {
 
 async function getNewGame(req, res, next) {
   try {
-    res.render("new", { errors: [] });
+    res.render("new", { errors: [], oldValues: {} });
   } catch (error) {
     console.log("Error requesting new game form", error);
     next(error);
@@ -35,6 +35,7 @@ async function postNewGame(req, res, next) {
     if (!errors.isEmpty()) {
       return res.status(400).render("new", {
         errors: errors.array(),
+        oldValues: req.body,
       });
     }
     await db.insertGame(req.body);
@@ -87,8 +88,8 @@ async function GetEditGame(req, res, next) {
     authorName = author[0].name;
     game = { ...game, author_name: authorName };
     let genre_name = await db.getGenreById(game.genre);
-    game = { ...game, genre_name };
-    res.render("edit", { game: game });
+    game = { ...game, genre_name, id: id };
+    res.render("edit", { errors: [], game: game });
   } catch (error) {
     console.log("Error getting edit view", error);
     next(error);
@@ -97,6 +98,16 @@ async function GetEditGame(req, res, next) {
 
 async function PostEditGame(req, res, next) {
   try {
+    const errors = validationResult(req);
+    console.log(errors);
+    req.body.id = req.params.id;
+    console.log("hereee", req.query.id);
+    if (!errors.isEmpty()) {
+      return res.status(400).render("edit", {
+        errors: errors.array(),
+        game: req.body,
+      });
+    }
     let gameId = req.params.id;
     let game = await db.getGameById(gameId);
     let authorObj = await db.getAuthorById(game.author);

@@ -86,6 +86,19 @@
       .autocomplete-suggestion:hover {
         background-color: #f0f0f0;
       }
+
+      /* Error message styles */
+      .error-message {
+        color: red;
+        font-size: 14px;
+        margin-top: 5px;
+      }
+
+      .error-summary {
+        color: red;
+        font-weight: bold;
+        margin-bottom: 15px;
+      }
     </style>
   </head>
   <body>
@@ -93,35 +106,74 @@
 
     <div class="container" style="margin-top: 8rem">
       <h2>Add a New Game</h2>
+
       <form id="addGameForm" action="/new" method="POST">
+        <!-- Game Title -->
         <div>
           <label for="title">Game Title:</label>
-          <input type="text" id="title" name="title" required />
+          <input
+            type="text"
+            id="title"
+            name="title"
+            value="<%= oldValues && oldValues.title %>"
+            required
+          />
+          <% if (errors) { %> <% errors.filter(error => error.path ===
+          'title').forEach(error => { %>
+          <div class="error-message"><%= error.msg %></div>
+          <% }) %> <% } %>
         </div>
+
+        <!-- Author -->
         <div>
           <label for="author">Author:</label>
-          <input type="text" id="author" name="author" required />
+          <input
+            type="text"
+            id="author"
+            name="author"
+            value="<%= oldValues && oldValues.author %>"
+            required
+          />
+          <% if (errors) { %> <% errors.filter(error => error.path ===
+          'author').forEach(error => { %>
+          <div class="error-message"><%= error.msg %></div>
+          <% }) %> <% } %>
         </div>
+
+        <!-- Genre -->
         <div>
           <label for="genre">Genre:</label>
           <input
             type="text"
             id="genre"
             name="genre"
+            value="<%= oldValues && oldValues.genre %>"
             required
             autocomplete="off"
           />
           <div id="suggestions" class="autocomplete-suggestions"></div>
+          <% if (errors) { %> <% errors.filter(error => error.path ===
+          'genre').forEach(error => { %>
+          <div class="error-message"><%= error.msg %></div>
+          <% }) %> <% } %>
         </div>
+
+        <!-- Description -->
         <div>
           <label for="description">Description:</label>
           <textarea
             id="description"
             name="description"
             rows="4"
+            value="<%= oldValues && oldValues.description %>"
             required
           ></textarea>
+          <% if (errors) { %> <% errors.filter(error => error.path ===
+          'description').forEach(error => { %>
+          <div class="error-message"><%= error.msg %></div>
+          <% }) %> <% } %>
         </div>
+
         <div>
           <button type="submit">Add Game</button>
         </div>

@@ -6,7 +6,7 @@ const genres = [
   "Role-playing",
   "Simulation",
   "Strategy",
-]; // Define your genres here
+];
 
 const validateUser = [
   body("title")
@@ -27,7 +27,6 @@ const validateUser = [
     .trim()
     .isAlpha()
     .notEmpty()
-    .isIn(genres)
     .withMessage("Genre must be something else"),
 
   body("description")

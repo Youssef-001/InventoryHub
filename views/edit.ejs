@@ -72,6 +72,17 @@
       .cancel-button:hover {
         background-color: #ff1a1a;
       }
+
+      /* Error styles */
+      .error {
+        border-color: #ff4d4d;
+      }
+
+      .error-message {
+        color: #ff4d4d;
+        font-size: 0.9rem;
+        margin-top: 5px;
+      }
     </style>
   </head>
   <body>
@@ -85,8 +96,16 @@
           id="title"
           name="title"
           value="<%= game.title %>"
+          class="<%= errors.some(error => error.path === 'title') ? 'error' : '' %>"
           required
         />
+        <% if (errors) { %>
+          <% errors.forEach(function(error) { %>
+            <% if (error.path === 'title') { %>
+              <div class="error-message"><%= error.msg %></div>
+            <% } %>
+          <% }); %>
+        <% } %>
 
         <!-- Author -->
         <label for="author">Author</label>
@@ -95,12 +114,20 @@
           id="author"
           name="author"
           value="<%= game.author_name %>"
+          class="<%= errors.some(error => error.path === 'author') ? 'error' : '' %>"
           required
         />
+        <% if (errors) { %>
+          <% errors.forEach(function(error) { %>
+            <% if (error.path === 'author') { %>
+              <div class="error-message"><%= error.msg %></div>
+            <% } %>
+          <% }); %>
+        <% } %>
 
         <!-- Genre -->
         <label for="genre">Genre</label>
-        <select id="genre" name="genre" required>
+        <select id="genre" name="genre" class="<%= errors.some(error => error.path === 'genre') ? 'error' : '' %>" required>
           <option value="action" <%= game.genre_name === 'Action' ? 'selected' : '' %>>Action</option>
           <option value="adventure" <%= game.genre_name === 'Adventure' ? 'selected' : '' %>>Adventure</option>
           <option value="role-playing game" <%= game.genre_name === 'Role-Playing Game' ? 'selected' : '' %>>Role-playing</option>
@@ -108,6 +135,13 @@
           <option value="strategy" <%= game.genre_name === 'Strategy' ? 'selected' : '' %>>Strategy</option>
           <option value="sports" <%= game.genre_name === 'Sports' ? 'selected' : '' %>>Sports</option>
         </select>
+        <% if (errors) { %>
+          <% errors.forEach(function(error) { %>
+            <% if (error.path === 'genre') { %>
+              <div class="error-message"><%= error.msg %></div>
+            <% } %>
+          <% }); %>
+        <% } %>
 
         <!-- Description -->
         <label for="description">Description</label>
@@ -115,8 +149,16 @@
           id="description"
           name="description"
           rows="5"
+          class="<%= errors.some(error => error.path === 'description') ? 'error' : '' %>"
           required
         ><%= game.description %></textarea>
+        <% if (errors) { %>
+          <% errors.forEach(function(error) { %>
+            <% if (error.path === 'description') { %>
+              <div class="error-message"><%= error.msg %></div>
+            <% } %>
+          <% }); %>
+        <% } %>
 
         <!-- Cover URL -->
         <label for="cover">Cover URL</label>
@@ -125,8 +167,16 @@
           id="cover"
           name="cover"
           value="<%= game.cover %>"
+          class="<%= errors.some(error => error.path === 'cover') ? 'error' : '' %>"
           required
         />
+        <% if (errors) { %>
+          <% errors.forEach(function(error) { %>
+            <% if (error.path === 'cover') { %>
+              <div class="error-message"><%= error.msg %></div>
+            <% } %>
+          <% }); %>
+        <% } %>
 
         <!-- Save and Cancel Buttons -->
         <div class="button-group">

@@ -25,7 +25,7 @@ gameRouter.get("/edit/:id", (req, res, next) => {
   gameController.GetEditGame(req, res, next);
 });
 
-gameRouter.post("/edit/:id", (req, res, next) => {
+gameRouter.post("/edit/:id", validateUser, (req, res, next) => {
   gameController.PostEditGame(req, res, next);
 });
 
