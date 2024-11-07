@@ -1,35 +1,32 @@
 const { Router } = require("express");
 const gameController = require("../controllers/gameController");
-
+const validateUser = require("../controllers/validationController");
+const { body, validationResult } = require("express-validator");
 const gameRouter = Router();
 
 gameRouter.get("/", (req, res, next) => {
   gameController.getGames(req, res, next);
 });
 
-gameRouter.get("/new", (req, res) => {
-  gameController.getNewGame(req, res);
+gameRouter.get("/new", (req, res, next) => {
+  gameController.getNewGame(req, res, next);
 });
 
-gameRouter.post("/new", (req, res) => {
-  gameController.postNewGame(req, res);
+gameRouter.post("/new", validateUser, (req, res, next) => {
+  gameController.postNewGame(req, res, next);
 });
 
-gameRouter.get("/delete/:id", (req, res) => {
-  gameController.deleteGame(req, res);
+gameRouter.get("/delete/:id", (req, res, next) => {
+  gameController.deleteGame(req, res, next);
   res.redirect("/");
 });
 
-gameRouter.get("/edit/:id", (req, res) => {
-  gameController.GetEditGame(req, res);
+gameRouter.get("/edit/:id", (req, res, next) => {
+  gameController.GetEditGame(req, res, next);
 });
 
-gameRouter.post("/edit/:id", (req, res) => {
-  gameController.PostEditGame(req, res);
+gameRouter.post("/edit/:id", (req, res, next) => {
+  gameController.PostEditGame(req, res, next);
 });
-
-// gameRouter.get("/", (req, res) => {
-//   gameController.GetSearchGames(req, res);
-// });
 
 module.exports = gameRouter;

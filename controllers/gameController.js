@@ -1,4 +1,6 @@
 const db = require("../db/queries");
+const validateUser = require("../controllers/validationController");
+const { body, validationResult } = require("express-validator");
 
 async function getGames(req, res, next) {
   // Ensure 'next' is included
@@ -17,35 +19,52 @@ async function getGames(req, res, next) {
   }
 }
 
-async function getNewGame(req, res) {
-  res.render("new");
+async function getNewGame(req, res, next) {
+  try {
+    res.render("new", { errors: [] });
+  } catch (error) {
+    console.log("Error requesting new game form", error);
+    next(error);
+  }
 }
 
-async function postNewGame(req, res) {
+async function postNewGame(req, res, next) {
   try {
+    const errors = validationResult(req);
+    console.log(errors);
+    if (!errors.isEmpty()) {
+      return res.status(400).render("new", {
+        errors: errors.array(),
+      });
+    }
     await db.insertGame(req.body);
     res.redirect("/");
   } catch (error) {
     console.log("Error inserting game", error);
-    res.status(500).send("Internal server error");
+    next(error);
   }
 }
 
-async function deleteGame(req, res) {
+async function deleteGame(req, res, next) {
   try {
     let id = req.params.id;
     await db.deleteGame(id);
   } catch (error) {
     console.log("Error deleting game", error);
-    res.status(500).send("Internal server error");
+    next(error);
   }
 }
 
-async function getAuthors(req, res) {
-  let authors = await db.getAuthors();
+async function getAuthors(req, res, next) {
+  try {
+    let authors = await db.getAuthors();
 
-  console.log(authors);
-  res.render("authors", { authors: authors });
+    console.log(authors);
+    res.render("authors", { authors: authors });
+  } catch (error) {
+    console.log("Error getting authors", error);
+    next(error);
+  }
 }
 
 async function getAuthorById(req, res) {
@@ -60,44 +79,54 @@ async function getAuthorById(req, res) {
   res.render("author", { author: author[0], games: games });
 }
 
-async function GetEditGame(req, res) {
-  let id = req.params.id;
-  let game = await db.getGameById(id);
-  let author = await db.getAuthorById(game.author);
-  authorName = author[0].name;
-  game = { ...game, author_name: authorName };
-  let genre_name = await db.getGenreById(game.genre);
-  game = { ...game, genre_name };
-  res.render("edit", { game: game });
+async function GetEditGame(req, res, next) {
+  try {
+    let id = req.params.id;
+    let game = await db.getGameById(id);
+    let author = await db.getAuthorById(game.author);
+    authorName = author[0].name;
+    game = { ...game, author_name: authorName };
+    let genre_name = await db.getGenreById(game.genre);
+    game = { ...game, genre_name };
+    res.render("edit", { game: game });
+  } catch (error) {
+    console.log("Error getting edit view", error);
+    next(error);
+  }
 }
 
-async function PostEditGame(req, res) {
-  let gameId = req.params.id;
-  let game = await db.getGameById(gameId);
-  let authorObj = await db.getAuthorById(game.author);
-  let authorName = authorObj[0].name;
-  let genreId = await db.getGenreId(req.body.genre);
-  let authorId = authorObj[0].id;
+async function PostEditGame(req, res, next) {
+  try {
+    let gameId = req.params.id;
+    let game = await db.getGameById(gameId);
+    let authorObj = await db.getAuthorById(game.author);
+    let authorName = authorObj[0].name;
+    let genreId = await db.getGenreId(req.body.genre);
+    let authorId = authorObj[0].id;
 
-  let authorGameCount = await db.getCountGamesAuthor(authorId);
+    let authorGameCount = await db.getCountGamesAuthor(authorId);
 
-  console.log(req.body.author);
-  let newAuthorId = -1;
+    console.log(req.body.author);
+    let newAuthorId = -1;
 
-  if (authorName == req.body.author) {
-    await db.updateGame(req.body, gameId, authorId, genreId);
-  } else if (authorName != req.body.author && authorGameCount == 1) {
-    await db.updateAuthor(authorId, req.body.author);
-    await db.updateGame(req.body, gameId, authorId, genreId);
-  } else {
-    newAuthorId = await db.insertAuthor(req.body.author);
+    if (authorName == req.body.author) {
+      await db.updateGame(req.body, gameId, authorId, genreId);
+    } else if (authorName != req.body.author && authorGameCount == 1) {
+      await db.updateAuthor(authorId, req.body.author);
+      await db.updateGame(req.body, gameId, authorId, genreId);
+    } else {
+      newAuthorId = await db.insertAuthor(req.body.author);
+    }
+
+    if (newAuthorId != -1) {
+      await db.updateGame(req.body, gameId, newAuthorId, genreId);
+    }
+
+    res.redirect("/");
+  } catch (error) {
+    console.log("Error editing game", error);
+    next(error);
   }
-
-  if (newAuthorId != -1) {
-    await db.updateGame(req.body, gameId, newAuthorId, genreId);
-  }
-
-  res.redirect("/");
 }
 
 async function GetSearchGames(req, res) {

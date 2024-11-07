@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form with Validation Errors</title>
+    <style>
+      .error-message {
+        color: red;
+        margin-bottom: 10px;
+      }
+      .error-summary {
+        font-weight: bold;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Form with Errors</h1>
+
+    <!-- Error Summary -->
+    <% if (errors && errors.length > 0) { %>
+    <div class="error-summary">
+      There are some errors in your form submission:
+    </div>
+    <% } %>
+
+    <!-- Form with Inputs -->
+    <form method="POST" action="/submit">
+      <label for="author">Author:</label>
+      <input type="text" id="author" name="author" value="" />
+      <% if (errors) { %> <% errors.filter(error => error.path ===
+      'author').forEach(error => { %>
+      <div class="error-message"><%= error.msg %></div>
+      <% }) %> <% } %>
+
+      <label for="description">Description:</label>
+      <textarea id="description" name="description"></textarea>
+      <% if (errors) { %> <% errors.filter(error => error.path ===
+      'description').forEach(error => { %>
+      <div class="error-message"><%= error.msg %></div>
+      <% }) %> <% } %>
+
+      <button type="submit">Submit</button>
+    </form>
+  </body>
+</html>
