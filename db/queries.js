@@ -32,7 +32,6 @@ async function getGenreById(id) {
        WHERE genres.id = $1`,
     [id]
   );
-  //   console.log(rows[0].genre_title);
   return rows[0].genre_title;
 }
 async function getAuthorById() {}
