@@ -3,8 +3,8 @@ const gameController = require("../controllers/gameController");
 
 const gameRouter = Router();
 
-gameRouter.get("/", (req, res) => {
-  gameController.getGames(req, res);
+gameRouter.get("/", (req, res, next) => {
+  gameController.getGames(req, res, next);
 });
 
 gameRouter.get("/new", (req, res) => {

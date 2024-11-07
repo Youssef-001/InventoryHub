@@ -9,13 +9,6 @@
         font-family: Arial, sans-serif;
         background-color: #f4f4f4;
         margin: 0;
-        padding: 20px;
-      }
-
-      h1 {
-        color: #333;
-        text-align: center;
-        margin-bottom: 20px;
       }
 
       #addGameForm {
@@ -33,6 +26,10 @@
         margin-right: 20px;
       }
 
+      h2 {
+        text-align: center;
+        font-size: 2rem;
+      }
       label {
         display: block;
         margin-bottom: 5px;
@@ -92,44 +89,44 @@
     </style>
   </head>
   <body>
-    <h1>Add a New Game</h1>
-    <form id="addGameForm" action="/new" method="POST">
-      <div>
-        <label for="title">Game Title:</label>
-        <input type="text" id="title" name="title" required />
-      </div>
+    <%- include('header') %>
 
-      <div>
-        <label for="author">Author:</label>
-        <input type="text" id="author" name="author" required />
-      </div>
-
-      <div>
-        <label for="genre">Genre:</label>
-        <input
-          type="text"
-          id="genre"
-          name="genre"
-          required
-          autocomplete="off"
-        />
-        <div id="suggestions" class="autocomplete-suggestions"></div>
-      </div>
-
-      <div>
-        <label for="description">Description:</label>
-        <textarea
-          id="description"
-          name="description"
-          rows="4"
-          required
-        ></textarea>
-      </div>
-
-      <div>
-        <button type="submit">Add Game</button>
-      </div>
-    </form>
+    <div class="container" style="margin-top: 8rem">
+      <h2>Add a New Game</h2>
+      <form id="addGameForm" action="/new" method="POST">
+        <div>
+          <label for="title">Game Title:</label>
+          <input type="text" id="title" name="title" required />
+        </div>
+        <div>
+          <label for="author">Author:</label>
+          <input type="text" id="author" name="author" required />
+        </div>
+        <div>
+          <label for="genre">Genre:</label>
+          <input
+            type="text"
+            id="genre"
+            name="genre"
+            required
+            autocomplete="off"
+          />
+          <div id="suggestions" class="autocomplete-suggestions"></div>
+        </div>
+        <div>
+          <label for="description">Description:</label>
+          <textarea
+            id="description"
+            name="description"
+            rows="4"
+            required
+          ></textarea>
+        </div>
+        <div>
+          <button type="submit">Add Game</button>
+        </div>
+      </form>
+    </div>
 
     <script>
       const genres = [

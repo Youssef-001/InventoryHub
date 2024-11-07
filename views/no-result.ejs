@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>No Games Found</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        color: #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+      .container {
+        text-align: center;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 600px;
+      }
+      h2 {
+        font-size: 2rem;
+        color: #ff6347; /* Tomato color */
+      }
+      p {
+        font-size: 1rem;
+        margin: 20px 0;
+        color: #555;
+      }
+      a {
+        color: #007bff;
+        text-decoration: none;
+        font-weight: bold;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      .icon {
+        font-size: 5rem;
+        color: #ff6347;
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('header') %>
+
+    <div class="container">
+      <div class="icon">🎮</div>
+      <h2>No Games Found</h2>
+      <p>
+        It looks like we couldn't find any games in your inventory. Please try
+        again later or add new games to your collection.
+      </p>
+      <p><a href="/new">Add a new game</a></p>
+    </div>
+  </body>
+</html>

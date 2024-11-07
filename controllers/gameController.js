@@ -1,9 +1,20 @@
 const db = require("../db/queries");
 
-async function getGames(req, res) {
-  let games = await db.getGames(req.query.filter || "", req.query.search || "");
-  //   console.log(games);
-  res.render("index", { games: games });
+async function getGames(req, res, next) {
+  // Ensure 'next' is included
+  try {
+    let games = await db.getGames(
+      req.query.filter || "",
+      req.query.search || ""
+    );
+    if (games.length === 0) {
+      throw new Error("No games found");
+    }
+    res.render("index", { games });
+  } catch (error) {
+    console.log("Error fetching games", error);
+    next(error); // Pass the error to the next middleware
+  }
 }
 
 async function getNewGame(req, res) {
@@ -11,13 +22,23 @@ async function getNewGame(req, res) {
 }
 
 async function postNewGame(req, res) {
-  await db.insertGame(req.body);
-  res.redirect("/");
+  try {
+    await db.insertGame(req.body);
+    res.redirect("/");
+  } catch (error) {
+    console.log("Error inserting game", error);
+    res.status(500).send("Internal server error");
+  }
 }
 
 async function deleteGame(req, res) {
-  let id = req.params.id;
-  await db.deleteGame(id);
+  try {
+    let id = req.params.id;
+    await db.deleteGame(id);
+  } catch (error) {
+    console.log("Error deleting game", error);
+    res.status(500).send("Internal server error");
+  }
 }
 
 async function getAuthors(req, res) {
@@ -44,7 +65,6 @@ async function GetEditGame(req, res) {
   let game = await db.getGameById(id);
   let author = await db.getAuthorById(game.author);
   authorName = author[0].name;
-  // console.log(game);
   game = { ...game, author_name: authorName };
   let genre_name = await db.getGenreById(game.genre);
   game = { ...game, genre_name };
@@ -52,7 +72,6 @@ async function GetEditGame(req, res) {
 }
 
 async function PostEditGame(req, res) {
-  // TODO Alter row instead of delete and insert
   let gameId = req.params.id;
   let game = await db.getGameById(gameId);
   let authorObj = await db.getAuthorById(game.author);
@@ -64,8 +83,6 @@ async function PostEditGame(req, res) {
 
   console.log(req.body.author);
   let newAuthorId = -1;
-  // TODO either it's the author's only game then just edit his name in authors table,
-  //else add him in authors table and change author's id in games table for the updated game
 
   if (authorName == req.body.author) {
     await db.updateGame(req.body, gameId, authorId, genreId);
